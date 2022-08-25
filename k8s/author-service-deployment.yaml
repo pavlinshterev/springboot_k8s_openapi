@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: author-service-app
+  name: author-service-deployment
+  namespace: microservices
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: author-service-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: author-service-app
+      namespace: microservices
+    spec:
+      containers:
+      - image: {{AUTHOR_DOCKER_IMAGE}}
+        name: author-service-pod
+        resources: {}
+        env:
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-creds
+              key: author_db_conn
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-creds
+              key: author_db_user
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-creds
+              key: author_db_pass
+        readinessProbe:
+          httpGet:
+            path: /authors/actuator/health
+            port: 30001
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 20
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /authors/actuator/health
+            port: 30001
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 5
+          successThreshold: 1
+      imagePullSecrets:
+      - name: reg-creds
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: author-service
+  name: author-service
+  namespace: microservices
+spec:
+  ports:
+  - port: 8001
+    protocol: TCP
+    targetPort: 30001
+  selector:
+    app: author-service-app
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-service-app
+  name: ui-service-deployment
+  namespace: microservices
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui-service-app
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ui-service-app
+      namespace: microservices
+    spec:
+      containers:
+      - image: {{UI_DOCKER_IMAGE}}
+        name: ui-service-pod
+        resources: {}
+        readinessProbe:
+          httpGet:
+            path: /ui/actuator/health
+            port: 30001
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 2
+          failureThreshold: 20
+          successThreshold: 1
+        livenessProbe:
+          httpGet:
+            path: /ui/actuator/health
+            port: 30001
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 2
+          failureThreshold: 5
+          successThreshold: 1
+      imagePullSecrets:
+        - name: reg-creds
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ui-service
+  name: ui-service
+  namespace: microservices
+spec:
+  ports:
+    - port: 8001
+      protocol: TCP
+      targetPort: 30001
+  selector:
+    app: ui-service-app
+  type: ClusterIP
+status:
+  loadBalancer: {}

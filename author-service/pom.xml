@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <parent>
+      <groupId>com.pshterev.microservices</groupId>
+      <artifactId>project-root</artifactId>
+      <version>0.1</version>
+   </parent>
+
+   <artifactId>author-service</artifactId>
+   <name>Author service</name>
+   <description>Author service</description>
+
+   <profiles>
+      <profile>
+         <id>local</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <properties>
+            <spring-boot.run.profiles>local</spring-boot.run.profiles>
+         </properties>
+      </profile>
+      <profile>
+         <id>prod</id>
+         <properties>
+            <spring-boot.run.profiles>prod</spring-boot.run.profiles>
+         </properties>
+      </profile>
+   </profiles>
+
+   <dependencies>
+
+      <!-- SPRING BOOT -->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-actuator</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-data-jpa</artifactId>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-data-rest</artifactId>
+      </dependency>
+
+      <!-- SPRING DOC -->
+      <dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-core</artifactId>
+         <version>${springdoc.openapi.core.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-webmvc-core</artifactId>
+         <version>${springdoc.openapi.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-common</artifactId>
+         <version>${springdoc.openapi.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.springdoc</groupId>
+         <artifactId>springdoc-openapi-data-rest</artifactId>
+         <version>${springdoc.openapi.version}</version>
+      </dependency>
+
+      <!-- OTHER -->
+      <dependency>
+         <groupId>com.google.code.gson</groupId>
+         <artifactId>gson</artifactId>
+         <version>${gson.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>mysql</groupId>
+         <artifactId>mysql-connector-java</artifactId>
+         <version>${mysql.connector.version}</version>
+         <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+         <groupId>com.h2database</groupId>
+         <artifactId>h2</artifactId>
+         <scope>runtime</scope>
+      </dependency>
+
+      <!-- TEST DEPENDENCIES-->
+      <dependency>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-test</artifactId>
+         <scope>test</scope>
+      </dependency>
+
+<!--      <dependency>-->
+<!--         <groupId>org.junit.vintage</groupId>-->
+<!--         <artifactId>junit-vintage-engine</artifactId>-->
+<!--         <scope>test</scope>-->
+<!--      </dependency>-->
+   </dependencies>
+
+   <build>
+      <plugins>
+         <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>${spring.boot.version}</version>
+            <configuration>
+               <mainClass>com.pshterev.microservices.authorservice.AuthorServiceApplication</mainClass>
+               <systemPropertyVariables>
+                  <serverAddress>should_be_overriden</serverAddress>
+                  <version>should_be_overriden</version>
+               </systemPropertyVariables>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>pre-integration-test</id>
+                  <goals>
+                     <goal>start</goal>
+                  </goals>
+                  <configuration>
+                     <profiles>local</profiles>
+                  </configuration>
+               </execution>
+               <execution>
+                  <id>post-integration-test</id>
+                  <goals>
+                     <goal>stop</goal>
+                  </goals>
+               </execution>
+               <execution>
+                  <goals>
+                     <goal>repackage</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+         <plugin>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-maven-plugin</artifactId>
+            <version>${spring.doc.maven.plugin.version}</version>
+            <executions>
+               <execution>
+                  <id>pre-integration-test</id>
+                  <goals>
+                     <goal>generate</goal>
+                  </goals>
+               </execution>
+            </executions>
+            <configuration>
+               <outputFileName>openapi.json</outputFileName>
+               <outputDir>${project.basedir}/openapi-output</outputDir>
+               <apiDocsUrl>http://localhost:30001/authors/v3/api-docs</apiDocsUrl>
+            </configuration>
+         </plugin>
+      </plugins>
+   </build>
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>${junit.bom.version}</version>
+            <type>pom</type>
+         </dependency>
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring.boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+      </dependencies>
+   </dependencyManagement>
+
+   <repositories>
+      <repository>
+         <id>spring-milestones</id>
+         <name>Spring Milestones</name>
+         <url>https://repo.spring.io/milestone</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </repository>
+      <repository>
+         <id>spring-snapshots</id>
+         <name>Spring Snapshots</name>
+         <url>https://repo.spring.io/snapshot</url>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+      </repository>
+   </repositories>
+
+   <pluginRepositories>
+      <pluginRepository>
+         <id>spring-milestones</id>
+         <name>Spring Milestones</name>
+         <url>https://repo.spring.io/milestone</url>
+         <snapshots>
+            <enabled>false</enabled>
+         </snapshots>
+      </pluginRepository>
+      <pluginRepository>
+         <id>spring-snapshots</id>
+         <name>Spring Snapshots</name>
+         <url>https://repo.spring.io/snapshot</url>
+         <releases>
+            <enabled>false</enabled>
+         </releases>
+      </pluginRepository>
+   </pluginRepositories>
+
+</project>

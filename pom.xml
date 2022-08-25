@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>com.pshterev.microservices</groupId>
+   <version>0.1</version>
+   <artifactId>project-root</artifactId>
+   <name>Microservices directory</name>
+   <packaging>pom</packaging>
+
+   <properties>
+      <java.version>17</java.version>
+      <maven.compiler.release>17</maven.compiler.release>
+      <maven.compiler.source>17</maven.compiler.source>
+      <maven.compiler.target>17</maven.compiler.target>
+      <spring.boot.version>2.5.14</spring.boot.version>
+      <junit.bom.version>5.7.2</junit.bom.version>
+      <openapi.generator.maven.plugin.version>6.0.1</openapi.generator.maven.plugin.version>
+      <spring.doc.maven.plugin.version>1.4</spring.doc.maven.plugin.version>
+      <springdoc.openapi.core.version>1.1.49</springdoc.openapi.core.version>
+      <springdoc.openapi.version>1.6.9</springdoc.openapi.version>
+      <openapi.generator.cli.version>5.2.1</openapi.generator.cli.version>
+      <gson.version>2.8.5</gson.version>
+      <gson.fire.version>1.8.5</gson.fire.version>
+      <mysql.connector.version>8.0.30</mysql.connector.version>
+      <okhttp.version>4.10.0</okhttp.version>
+      <javax.ws.rs.api.version>2.1.1</javax.ws.rs.api.version>
+   </properties>
+
+   <modules>
+      <module>book-service</module>
+      <module>book-service-client</module>
+      <module>author-service</module>
+      <module>author-service-client</module>
+      <module>ui-service</module>
+   </modules>
+</project>

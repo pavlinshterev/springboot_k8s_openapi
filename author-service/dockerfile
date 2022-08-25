@@ -1,0 +1,7 @@
+FROM openjdk:17-alpine
+RUN apk add --no-cache bash
+RUN addgroup --system customuser && adduser --system customuser --ingroup customuser
+USER customuser:customuser
+ARG JAR_FILE=target/*.jar
+COPY $JAR_FILE app.jar
+ENTRYPOINT ["java","-jar","-Dspring.profiles.active=prod","/app.jar"]
