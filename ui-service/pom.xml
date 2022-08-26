@@ -35,6 +35,12 @@
       <!-- Project deps -->
       <dependency>
          <groupId>com.pshterev.microservices</groupId>
+         <artifactId>common</artifactId>
+         <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+         <groupId>com.pshterev.microservices</groupId>
          <artifactId>book-service-client</artifactId>
          <version>${project.version}</version>
       </dependency>

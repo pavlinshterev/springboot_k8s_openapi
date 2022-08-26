@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.pshterev.microservices")
 public class AuthorServiceApplication {
 
    @Value("${serverAddress:https://default}")
