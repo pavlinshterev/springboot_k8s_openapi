@@ -88,6 +88,12 @@
          <version>${gson.version}</version>
       </dependency>
 
+      <dependency>
+         <groupId>com.h2database</groupId>
+         <artifactId>h2</artifactId>
+         <scope>runtime</scope>
+      </dependency>
+
       <!-- TEST DEPENDENCIES-->
       <dependency>
          <groupId>org.springframework.boot</groupId>

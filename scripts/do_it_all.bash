@@ -18,9 +18,9 @@ popd
 
 # Build and push Docker images
 
-"$DIR"/../book-service/scripts/build_docker_image.bash YOUR_DOCKER_REGISTRY:PORT_NUM/book-service-docker
-"$DIR"/../author-service/scripts/build_docker_image.bash YOUR_DOCKER_REGISTRY:PORT_NUM/author-service-docker
-"$DIR"/../ui-service/scripts/build_docker_image.bash YOUR_DOCKER_REGISTRY:PORT_NUM/ui-service-docker
+"$DIR"/../book-service/scripts/build_docker_image.bash DOCKER_REGISTRY_ADDRESS/book-service-docker
+"$DIR"/../author-service/scripts/build_docker_image.bash DOCKER_REGISTRY_ADDRESS/author-service-docker
+"$DIR"/../ui-service/scripts/build_docker_image.bash DOCKER_REGISTRY_ADDRESS/ui-service-docker
 
 # Upload K8s
 

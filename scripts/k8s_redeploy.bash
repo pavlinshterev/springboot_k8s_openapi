@@ -19,9 +19,9 @@ pushd $k8s_dir/k8s
 
 kubectl apply -f ingress-controller/
 kubectl apply -f 01_namespace.yaml
-cat author-service-deployment.yaml | sed "s/{{AUTHOR_DOCKER_IMAGE}}/YOUR_DOCKER_REGISTRY:PORT_NUM\/author-service-docker/g" | kubectl apply -f -
-cat book-service-deployment.yaml | sed "s/{{BOOK_DOCKER_IMAGE}}/YOUR_DOCKER_REGISTRY:PORT_NUM\/book-service-docker/g" | kubectl apply -f -
-cat ui-service-deployment.yaml | sed "s/{{UI_DOCKER_IMAGE}}/YOUR_DOCKER_REGISTRY:PORT_NUM\/ui-service-docker/g" | kubectl apply -f -
+cat author-service-deployment.yaml | sed "s/{{AUTHOR_DOCKER_IMAGE}}/DOCKER_REGISTRY_ADDRESS\/author-service-docker/g" | kubectl apply -f -
+cat book-service-deployment.yaml | sed "s/{{BOOK_DOCKER_IMAGE}}/DOCKER_REGISTRY_ADDRESS\/book-service-docker/g" | kubectl apply -f -
+cat ui-service-deployment.yaml | sed "s/{{UI_DOCKER_IMAGE}}/DOCKER_REGISTRY_ADDRESS\/ui-service-docker/g" | kubectl apply -f -
 cat microservices-ingress.yaml | sed "s/{{HOSTNAME}}/YOUR_SERVER_HOSTNAME/g" | kubectl apply -f -
 
 popd
