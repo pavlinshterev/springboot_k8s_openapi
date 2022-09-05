@@ -29,7 +29,7 @@ This is a sample project that demonstrates simple microservices implemented usin
     - [2.7 Kubernetes deployment and configuration](#27-kubernetes-deployment-and-configuration)
 
 
-## 1. How to run
+## [1. How to run](#table-of-contents)
 
 ### 1.1 Create databases
 
@@ -48,8 +48,6 @@ GRANT ALL ON authorsdb.* TO 'authorsdbuser'@'%' IDENTIFIED BY 'YOUR_SECURE_PASSW
 ```
 
 You can use authorsdb DB for the Author service and then create another DB for the Book service.
-
-So the first step is to create 
 
 ### 1.2 Create Kubernetes cluster
 
@@ -154,7 +152,7 @@ The script will do:
 * 4. Upload Kubernetes deployment files
 * 5. Delete and recreate Kubernetes objects
 
-## 2. Description
+## [2. Description](#table-of-contents)
 
 ### 2.1 Project hierarchy and build configuration
 
